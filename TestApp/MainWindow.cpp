@@ -11,6 +11,9 @@
 #include "PolygonObject.h"
 #include "WeatherManager.h"
 
+#include "smytilesource.h"
+#include "sroadtilesource.h"
+
 #include <QSharedPointer>
 #include <QtDebug>
 #include <QThread>
@@ -31,10 +34,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Setup some tile sources
     QSharedPointer<OSMTileSource> osmTiles(new OSMTileSource(OSMTileSource::OSMTiles), &QObject::deleteLater);
+    QSharedPointer<SMyTileSource> myTiles(new SMyTileSource(SMyTileSource::SMyTiles), &QObject::deleteLater);
+    QSharedPointer<SRoadTileSource> roadTiles(new SRoadTileSource(SMyTileSource::SMyTiles), &QObject::deleteLater);
     QSharedPointer<GridTileSource> gridTiles(new GridTileSource(), &QObject::deleteLater);
     QSharedPointer<CompositeTileSource> composite(new CompositeTileSource(), &QObject::deleteLater);
-    composite->addSourceBottom(osmTiles);
+//    composite->addSourceBottom(osmTiles);
+//    composite->addSourceBottom(myTiles);
+    composite->addSourceBottom(myTiles);
+    composite->addSourceTop(roadTiles, 0.5);
     composite->addSourceTop(gridTiles);
+
+//    composite->addSourceBottom(osmTiles);
+//    composite->addSourceTop(gridTiles);
     view->setTileSource(composite);
 
     //Create a widget in the dock that lets us configure tile source layers
@@ -46,11 +57,12 @@ MainWindow::MainWindow(QWidget *parent) :
     this->ui->menuWindow->addAction(this->ui->dockWidget->toggleViewAction());
     this->ui->dockWidget->toggleViewAction()->setText("&Layers");
 
-    view->setZoomLevel(4);
-    view->centerOn(-111.658752, 40.255456);
+    view->setZoomLevel(12);
+    view->centerOn(98.3746, 39.7608);
 
     WeatherManager * weatherMan = new WeatherManager(scene, this);
-    Q_UNUSED(weatherMan)
+//    Q_UNUSED(weatherMan)
+    weatherMan->doWeatherUpdate();
 }
 
 MainWindow::~MainWindow()

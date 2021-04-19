@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>Quick Start - Leaflet</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
+    <link rel="stylesheet" href="leaflet.css" crossorigin=""/>
+    <!-- <script src="leaflet.js" crossorigin=""></script> -->
+    <script src="leaflet-src.js" crossorigin=""></script>
+
+
+	
+</head>
+<body>
+
+
+
+<div id="mapid" style="width: 90%; height: 800px;"></div>
+<script>
+
+	var mymap = L.map('mapid').setView([39.7, 98.4], 13);
+
+	L.tileLayer('http://localhost:8000/tile/Gansu_jiayuguan&collection=ImgTile&tileKeyField=Key&dataField=Data&dataType=jpg_{z}_{x}_{y}.jpg', { maxZoom: 18,
+		attribution: '@sloan',
+		id: 'Gansu_jiayuguan',
+		tileSize: 256,
+		zoomOffset: 0
+	}).addTo(mymap);
+
+	// L.tileLayer(
+	// 	// 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', 
+	// 	'http://localhost:8000/leaflet/tile/satellite_base&collection=ImgTile&tileKeyField=Key&dataField=Data&dataType=jpg_{z}_{x}_{y}.jpg', 
+	//   { maxZoom: 18,
+	// 	attribution: '@sloan',
+	// 	id: 'mapbox/streets-v11',
+	// 	tileSize: 512,
+	// 	zoomOffset: -1
+	// }).addTo(mymap);
+
+	// maybe .jpg is .png
+	L.tileLayer('http://localhost:8000/tile/jiayuguan_zhuji&collection=ImgTile&tileKeyField=Key&dataField=Data&dataType=png_{z}_{x}_{y}.jpg', { maxZoom: 18,
+		attribution: '@sloan',
+		id: 'jiayuguan_zhuji',
+		tileSize: 256,
+		zoomOffset: 0
+	}).addTo(mymap);
+
+	// more images
+	L.tileLayer('http://localhost:8000/tms-db-static/tile?db=sar_layer&collection=ImgTile&tileKeyField=Key&dataField=Data&dataType=png_{z}_{x}_{y}.jpg', { maxZoom: 18,
+		attribution: '@sloan',
+		id: 'sar_layer',
+		tileSize: 256,
+		zoomOffset: 0
+	}).addTo(mymap);
+
+	L.marker([39.7, 98.49]).addTo(mymap)
+		.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+
+	L.circle([39.708, 98.51], 500, {
+		color: 'red',
+		fillColor: '#f03',
+		fillOpacity: 0.5
+	}).addTo(mymap).bindPopup("I am a circle.");
+
+	L.polygon([
+		[39.709, 98.48],
+		[39.703, 98.46],
+		[39.71, 98.447]
+	]).addTo(mymap).bindPopup("I am a polygon.");
+
+
+	var popup = L.popup();
+
+	function onMapClick(e) {
+		popup
+			.setLatLng(e.latlng)
+			.setContent("You clicked the map at " + e.latlng.toString())
+			.openOn(mymap);
+	}
+
+	mymap.on('click', onMapClick);
+
+</script>
+
+
+
+</body>
+</html>
