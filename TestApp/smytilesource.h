@@ -22,6 +22,11 @@ public:
     explicit SMyTileSource(SMyTileSource::SMyTileType tileType = SMyTiles);
     virtual ~SMyTileSource();
 
+    void setURL(QString host, QString uri) {
+        _uri = uri;
+        _host = host;
+    }
+
     virtual QPointF ll2qgs(const QPointF& ll, quint8 zoomLevel) const;
 
     virtual QPointF qgs2ll(const QPointF& qgs, quint8 zoomLevel) const;
@@ -46,6 +51,8 @@ protected:
 
     SMyTileSource::SMyTileType _tileType;
 private:
+    QString _uri;
+    QString _host;
 
     //Set used to ensure a tile with a certain cacheID isn't requested twice
     QSet<QString> _pendingRequests;

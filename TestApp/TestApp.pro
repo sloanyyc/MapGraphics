@@ -13,14 +13,10 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         MainWindow.cpp \
-    WeatherImageObject.cpp \
-    WeatherManager.cpp \
     smytilesource.cpp \
     sroadtilesource.cpp
 
 HEADERS  += MainWindow.h \
-    WeatherImageObject.h \
-    WeatherManager.h \
     smytilesource.h \
     sroadtilesource.h
 

@@ -106,10 +106,9 @@ void SMyTileSource::fetchTile(quint32 x, quint32 y, quint8 z)
     if (_tileType == SMyTiles)
     {
         //  /tile/Gansu_jiayuguan&collection=ImgTile&tileKeyField=Key&dataField=Data&dataType=jpg_13_6333_3109
-        host = "http://localhost:8000/tile";
-        url = urlFormat();
+        host = _host.isEmpty()?"http://192.168.3.38:8000/tile":_host;
+        url = _uri.isEmpty()?urlFormat():_uri;
     }
-    qDebug() << "url: " << url << endl;
 
     //Use the unique cacheID to see if this tile has already been requested
     const QString cacheID = this->createCacheID(x,y,z);
