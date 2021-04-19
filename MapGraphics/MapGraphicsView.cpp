@@ -311,11 +311,19 @@ void MapGraphicsView::zoomOut(ZoomMode zMode)
     if (this->zoomLevel() > _tileSource->minZoomLevel())
         this->setZoomLevel(this->zoomLevel()-1,zMode);
 }
-
+#include <QMessageBox>
+#include <QMouseEvent>
 //protected slot
 void MapGraphicsView::handleChildMouseDoubleClick(QMouseEvent *event)
 {
     event->setAccepted(false);
+    QPoint pos = event->pos();
+    const QPointF  centerGeoPos = this->mapToScene(pos);
+
+    QMessageBox::information(this, u8"位置",
+                             QString("%1, %2")
+                             .arg(centerGeoPos.x())
+                             .arg(centerGeoPos.y()));
 }
 
 //protected slot
