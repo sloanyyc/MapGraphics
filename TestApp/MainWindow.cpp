@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QSharedPointer<GridTileSource> gridTiles(new GridTileSource(), &QObject::deleteLater);
     QSharedPointer<CompositeTileSource> composite(new CompositeTileSource(), &QObject::deleteLater);
 
-    QSettings* setting = new QSettings(qApp->applicationFilePath()
+    QSettings* setting = new QSettings(qApp->applicationDirPath()
                                        +qApp->applicationName()+".ini",QSettings::IniFormat);
     setting->deleteLater();
 
@@ -51,9 +51,9 @@ MainWindow::MainWindow(QWidget *parent) :
     myTiles->setURL(bgHost, bgUri);
 
     QString roadHost = setting->value("map/roadHost", "http://localhost:8000/").toString();
-    QString roadUri = setting->value("map/roadUri", "/tile/Gansu_jiayuguan&collection=ImgTile&tileKeyField=Key&dataField=Data&dataType=jpg_%1_%2_%3.jpg").toString();
+    QString roadUri = setting->value("map/roadUri", "/tile/jiayuguan_zhuji&collection=ImgTile&tileKeyField=Key&dataField=Data&dataType=png_%1_%2_%3.jpg").toString();
     double roadAlpha = setting->value("map/roadAlpha", 0.5).toDouble();
-    roadTiles->setURL(bgHost, bgUri);
+    roadTiles->setURL(roadHost, roadUri);
 
     setting->setValue("map/bgHost", bgHost);
     setting->setValue("map/bgUri", bgUri);
